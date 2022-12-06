@@ -1,0 +1,32 @@
+name: dockercompose10525195207567066590
+services:
+  cms:
+    build:
+      context: /Users/user/Projects/CMS
+      dockerfile: CMS/Dockerfile
+    depends_on:
+      db:
+        condition: service_started
+    image: cms
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: "8080"
+      protocol: tcp
+  db:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: reallyStrongPwd123
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: "1433"
+      protocol: tcp
+networks:
+  default:
+    name: dockercompose10525195207567066590_default
